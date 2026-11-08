@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillConnect | Local Job & Skill Matching Portal for Daily-Wage Workers</title>
+  <meta name="description" content="SkillConnect connects unskilled and semi-skilled daily-wage workers with verified nearby jobs and employers. Find construction workers, electricians, plumbers, painters, and more.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- COLLEGE PROJECT PRESENTATION QUICK BAR -->
+  <div class="presentation-bar" id="presentationBar">
+    <div class="container pres-content">
+      <div class="pres-left">
+        <span class="pres-badge"><i class="fa-solid fa-graduation-cap"></i> College Demo Bar</span>
+        <span class="pres-text">Quick Switch Role:</span>
+        <button class="btn-demo-pill" id="demoWorkerBtn" title="Switch to Worker View">
+          <i class="fa-solid fa-helmet-safety"></i> Worker: Ramesh (Electrician)
+        </button>
+        <button class="btn-demo-pill" id="demoEmployerBtn" title="Switch to Employer View">
+          <i class="fa-solid fa-building-user"></i> Employer: Sharma Infra
+        </button>
+        <button class="btn-demo-pill btn-demo-reset" id="demoResetBtn" title="Reset sample data in LocalStorage">
+          <i class="fa-solid fa-rotate-right"></i> Reset Demo Data
+        </button>
+      </div>
+      <div class="pres-right">
+        <span class="pres-session" id="presSessionText">Logged in as: <strong>Guest</strong></span>
+        <button class="pres-close" id="presCloseBtn" title="Hide Quick Bar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- NAVIGATION HEADER -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#home" class="brand-logo">
+        <div class="logo-icon">
+          <i class="fa-solid fa-bolt-lightning"></i>
+        </div>
+        <div class="logo-text">
+          <span class="logo-main">SKILL<span class="highlight">CONNECT</span></span>
+          <span class="logo-sub">Daily-Wage & Skill Matching</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="nav-links" id="navLinks">
+        <a href="#home" class="nav-item active"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="#categories" class="nav-item"><i class="fa-solid fa-shapes"></i> Categories</a>
+        <a href="#jobs" class="nav-item"><i class="fa-solid fa-briefcase"></i> Find Jobs</a>
+        <a href="#workers" class="nav-item"><i class="fa-solid fa-people-carry-box"></i> Find Workers</a>
+        <a href="#howItWorks" class="nav-item"><i class="fa-solid fa-circle-question"></i> How It Works</a>
+        <a href="#about" class="nav-item"><i class="fa-solid fa-circle-info"></i> About Us</a>
+        <a href="#contact" class="nav-item"><i class="fa-solid fa-envelope"></i> Contact</a>
+      </nav>
+
+      <!-- Auth and Dashboard Actions -->
+      <div class="nav-actions" id="navActions">
+        <!-- Injected via JavaScript based on Auth state -->
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-nav-links">
+        <a href="#home" class="mobile-link active"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="#categories" class="mobile-link"><i class="fa-solid fa-shapes"></i> Categories</a>
+        <a href="#jobs" class="mobile-link"><i class="fa-solid fa-briefcase"></i> Find Jobs</a>
+        <a href="#workers" class="mobile-link"><i class="fa-solid fa-people-carry-box"></i> Find Workers</a>
+        <a href="#howItWorks" class="mobile-link"><i class="fa-solid fa-circle-question"></i> How It Works</a>
+        <a href="#about" class="mobile-link"><i class="fa-solid fa-circle-info"></i> About Us</a>
+        <a href="#contact" class="mobile-link"><i class="fa-solid fa-envelope"></i> Contact</a>
+      </div>
+      <div class="mobile-auth" id="mobileAuth">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT WRAPPER -->
+  <main>
+
+    <!-- SECTION 1: HERO SECTION -->
+    <section class="hero" id="home">
+      <div class="hero-bg-accent"></div>
+      <div class="container hero-container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="pulse-dot"></span>
+            <span>India's #1 Local Work & Skill Exchange</span>
+          </div>
+          <h1 class="hero-title">
+            Find Work. <span class="text-orange">Build Skills.</span> <br>Create Your Future.
+          </h1>
+          <p class="hero-subtitle">
+            Connecting hardworking daily-wage workers with verified local employers, contractors, and households. Transparent daily payouts, zero middlemen commissions, and instant hiring.
+          </p>
+
+          <!-- Hero Action CTAs -->
+          <div class="hero-buttons">
+            <a href="#jobs" class="btn btn-primary btn-lg">
+              <i class="fa-solid fa-magnifying-glass"></i> Find a Job
+            </a>
+            <a href="#workers" class="btn btn-secondary btn-lg">
+              <i class="fa-solid fa-user-plus"></i> Hire a Worker
+            </a>
+            <button class="btn btn-outline btn-lg" onclick="openModal('postJobModal')">
+              <i class="fa-solid fa-plus-circle"></i> Post a Job
+            </button>
+          </div>
+
+          <!-- Quick Hero Search Box -->
+          <div class="hero-search-card">
+            <form id="heroQuickSearchForm" class="hero-search-form">
+              <div class="search-input-group">
+                <i class="fa-solid fa-briefcase"></i>
+                <input type="text" id="heroKeywordInput" placeholder="Skill or job (e.g. Mason, Plumber, Painter)">
+              </div>
+              <div class="search-input-group">
+                <i class="fa-solid fa-location-dot"></i>
+                <select id="heroLocationSelect">
+                  <option value="all">All Locations (India)</option>
+                  <option value="Mumbai">Mumbai, MH</option>
+                  <option value="Delhi">Delhi NCR</option>
+                  <option value="Bengaluru">Bengaluru, KA</option>
+                  <option value="Pune">Pune, MH</option>
+                  <option value="Hyderabad">Hyderabad, TS</option>
+                  <option value="Ahmedabad">Ahmedabad, GJ</option>
+                  <option value="Jaipur">Jaipur, RJ</option>
+                  <option value="Chennai">Chennai, TN</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-search">
+                <i class="fa-solid fa-arrow-right"></i> Search Now
+              </button>
+            </form>
+            <div class="hero-tags">
+              <span>Popular Skills:</span>
+              <button class="tag-pill" data-category="Electricians">Electrician</button>
+              <button class="tag-pill" data-category="Plumbers">Plumber</button>
+              <button class="tag-pill" data-category="Carpenters">Carpenter</button>
+              <button class="tag-pill" data-category="Construction Workers">Mason</button>
+              <button class="tag-pill" data-category="Painters">Painter</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Visual: Real Indian Workers Showcase -->
+        <div class="hero-visual">
+          <div class="hero-image-wrapper">
+            <img 
+              src="https://images.unsplash.com/photo-1541888946425-d0fbb186c5f9?auto=format&fit=crop&w=1200&q=80" 
+              alt="Group of Indian skilled and semi-skilled workers, electricians, masons, and supervisors working together on project site" 
+              class="hero-main-img"
+              loading="eager"
+            >
+            <div class="hero-overlay-gradient"></div>
+            
+            <!-- Floating Trust Badges -->
+            <div class="floating-stat-card card-top-right">
+              <div class="stat-icon-circle bg-orange">
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+              </div>
+              <div>
+                <span class="float-title">₹850 - ₹1,200</span>
+                <span class="float-sub">Avg. Daily Wage</span>
+              </div>
+            </div>
+
+            <div class="floating-stat-card card-bottom-left">
+              <div class="stat-icon-circle bg-blue">
+                <i class="fa-solid fa-shield-check"></i>
+              </div>
+              <div>
+                <span class="float-title">100% Verified</span>
+                <span class="float-sub">Aadhaar & Police KYC</span>
+              </div>
+            </div>
+
+            <div class="floating-stat-card card-mid-left">
+              <div class="avatars-group">
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=120&q=80" alt="Worker">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="Worker">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=120&q=80" alt="Worker">
+              </div>
+              <div>
+                <span class="float-title">450+ Hired Today</span>
+                <span class="float-sub">Direct Same-Day Pay</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: LIVE STATISTICS COUNTER BANNER -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-icon"><i class="fa-solid fa-users-gear"></i></div>
+            <div class="stat-info">
+              <h3 class="stat-number" data-target="15800">15,800+</h3>
+              <p class="stat-label">Registered Workers</p>
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-icon"><i class="fa-solid fa-handshake"></i></div>
+            <div class="stat-info">
+              <h3 class="stat-number" data-target="9250">9,250+</h3>
+              <p class="stat-label">Jobs Completed</p>
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-icon"><i class="fa-solid fa-coins"></i></div>
+            <div class="stat-info">
+              <h3 class="stat-number" data-target="680">₹6.8 Cr+</h3>
+              <p class="stat-label">Wages Distributed</p>
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-icon"><i class="fa-solid fa-city"></i></div>
+            <div class="stat-info">
+              <h3 class="stat-number" data-target="45">45+</h3>
+              <p class="stat-label">Cities Covered</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DYNAMIC ROLE-BASED DASHBOARD SECTION (Conditional View) -->
+    <section class="dashboard-section" id="activeDashboardSection">
+      <!-- Container is populated by script.js when logged in as Worker or Employer -->
+      <div class="container" id="dashboardContainer">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- SECTION 3: WORKER CATEGORIES -->
+    <section class="categories-section" id="categories">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="sub-badge"><i class="fa-solid fa-hammer"></i> Essential Trades</div>
+          <h2 class="section-title">Explore Verified <span class="text-orange">Worker Categories</span></h2>
+          <p class="section-desc">
+            Browse through specialized trades for construction, repair, sanitation, agriculture, and logistics with transparent daily wages.
+          </p>
+        </div>
+
+        <div class="categories-grid" id="categoriesGrid">
+          <!-- Populated by JavaScript with 10 detailed categories -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: FIND JOBS (Interactive Search & Filters) -->
+    <section class="jobs-section" id="jobs">
+      <div class="container">
+        <div class="section-header-row">
+          <div>
+            <div class="sub-badge"><i class="fa-solid fa-clipboard-check"></i> Live Opportunities</div>
+            <h2 class="section-title">Latest <span class="text-blue">Daily-Wage Jobs</span> Nearby</h2>
+            <p class="section-desc">Apply directly to verified local contractors and home owners with same-day wage guarantees.</p>
+          </div>
+          <div class="header-action-btns">
+            <button class="btn btn-outline" id="resetFiltersBtn">
+              <i class="fa-solid fa-filter-circle-xmark"></i> Reset Filters
+            </button>
+            <button class="btn btn-primary" onclick="openModal('postJobModal')">
+              <i class="fa-solid fa-plus"></i> Post Job Requirement
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Bar Card -->
+        <div class="filter-panel-card">
+          <div class="filter-grid">
+            <div class="filter-field">
+              <label for="jobSearchInput"><i class="fa-solid fa-magnifying-glass"></i> Search Keywords</label>
+              <input type="text" id="jobSearchInput" placeholder="Job title, company or skill...">
+            </div>
+            <div class="filter-field">
+              <label for="jobCategoryFilter"><i class="fa-solid fa-tag"></i> Category</label>
+              <select id="jobCategoryFilter">
+                <option value="all">All Categories</option>
+                <!-- Populated via script.js -->
+              </select>
+            </div>
+            <div class="filter-field">
+              <label for="jobLocationFilter"><i class="fa-solid fa-location-dot"></i> City / Area</label>
+              <select id="jobLocationFilter">
+                <option value="all">All Cities</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Delhi">Delhi NCR</option>
+                <option value="Bengaluru">Bengaluru</option>
+                <option value="Pune">Pune</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Ahmedabad">Ahmedabad</option>
+                <option value="Jaipur">Jaipur</option>
+                <option value="Chennai">Chennai</option>
+              </select>
+            </div>
+            <div class="filter-field wage-slider-field">
+              <div class="slider-label-row">
+                <label for="jobWageRange"><i class="fa-solid fa-indian-rupee-sign"></i> Min Daily Wage</label>
+                <span class="range-val" id="wageValueDisplay">₹500/day</span>
+              </div>
+              <input type="range" id="jobWageRange" min="400" max="1500" step="50" value="500">
+            </div>
+          </div>
+          <div class="filter-status-row">
+            <div class="results-count" id="jobsCountBadge">Showing 0 Jobs</div>
+            <div class="filter-chips" id="activeFilterChips"></div>
+          </div>
+        </div>
+
+        <!-- Jobs Grid Container -->
+        <div class="jobs-grid" id="jobsGrid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: FIND WORKERS (Directory for Employers) -->
+    <section class="workers-section" id="workers">
+      <div class="container">
+        <div class="section-header-row">
+          <div>
+            <div class="sub-badge"><i class="fa-solid fa-user-check"></i> Available Talent</div>
+            <h2 class="section-title">Hire Verified <span class="text-orange">Local Workers</span></h2>
+            <p class="section-desc">View verified profiles, daily rate expectations, completed jobs, and contact directly.</p>
+          </div>
+          <div class="worker-search-mini">
+            <div class="search-input-group">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="workerSearchInput" placeholder="Search by name, skill, or city...">
+            </div>
+          </div>
+        </div>
+
+        <!-- Worker Filter Tabs -->
+        <div class="worker-tabs-row" id="workerCategoryTabs">
+          <button class="worker-tab-btn active" data-category="all">All Workers</button>
+          <button class="worker-tab-btn" data-category="Construction Workers">Construction</button>
+          <button class="worker-tab-btn" data-category="Electricians">Electricians</button>
+          <button class="worker-tab-btn" data-category="Plumbers">Plumbers</button>
+          <button class="worker-tab-btn" data-category="Carpenters">Carpenters</button>
+          <button class="worker-tab-btn" data-category="Painters">Painters</button>
+          <button class="worker-tab-btn" data-category="Cleaners">Cleaners</button>
+        </div>
+
+        <!-- Workers Cards Grid -->
+        <div class="workers-grid" id="workersGrid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: HOW IT WORKS -->
+    <section class="how-it-works-section" id="howItWorks">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="sub-badge"><i class="fa-solid fa-diagram-project"></i> Simple 3-Step Process</div>
+          <h2 class="section-title">How <span class="text-blue">SkillConnect</span> Works</h2>
+          <p class="section-desc">Designed with simplified workflows for everyday workers and busy contractors alike.</p>
+        </div>
+
+        <!-- Flow Switcher Toggle -->
+        <div class="toggle-flow-container">
+          <button class="flow-btn active" id="flowWorkerBtn">
+            <i class="fa-solid fa-helmet-safety"></i> For Daily Workers
+          </button>
+          <button class="flow-btn" id="flowEmployerBtn">
+            <i class="fa-solid fa-building-user"></i> For Employers & Contractors
+          </button>
+        </div>
+
+        <!-- Worker Workflow Steps -->
+        <div class="flow-steps-grid" id="workerFlowGrid">
+          <div class="step-card">
+            <div class="step-number">01</div>
+            <div class="step-icon bg-blue"><i class="fa-solid fa-id-card"></i></div>
+            <h3 class="step-title">Create Free Profile</h3>
+            <p class="step-text">Register with your mobile number, select your trade skills, work experience, and set your desired daily wage.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">02</div>
+            <div class="step-icon bg-orange"><i class="fa-solid fa-map-location-dot"></i></div>
+            <h3 class="step-title">Browse & Apply Nearby</h3>
+            <p class="step-text">Discover verified daily and weekly jobs within 5 to 10 km. Click "Apply Now" with zero paperwork.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">03</div>
+            <div class="step-icon bg-green"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+            <h3 class="step-title">Work & Get Paid Daily</h3>
+            <p class="step-text">Report to work, complete the assignment, and receive guaranteed cash or direct UPI payouts at day's end.</p>
+          </div>
+        </div>
+
+        <!-- Employer Workflow Steps (Hidden by default, toggled via JS) -->
+        <div class="flow-steps-grid hidden" id="employerFlowGrid">
+          <div class="step-card">
+            <div class="step-number">01</div>
+            <div class="step-icon bg-blue"><i class="fa-solid fa-file-circle-plus"></i></div>
+            <h3 class="step-title">Post Job in 60 Seconds</h3>
+            <p class="step-text">Enter required trade, daily budget, site location, and number of workers needed. Instant posting.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">02</div>
+            <div class="step-icon bg-orange"><i class="fa-solid fa-user-check"></i></div>
+            <h3 class="step-title">Review & Accept Applicants</h3>
+            <p class="step-text">View interested nearby workers, check their past ratings, and accept with a single click from your dashboard.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">03</div>
+            <div class="step-icon bg-green"><i class="fa-solid fa-circle-check"></i></div>
+            <h3 class="step-title">Project Completion & Rating</h3>
+            <p class="step-text">Manage attendance, pay daily wages directly with zero commission cuts, and rate workers for quality assurance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: WHY CHOOSE SKILLCONNECT -->
+    <section class="why-us-section">
+      <div class="container">
+        <div class="why-us-grid">
+          <div class="why-us-text">
+            <div class="sub-badge"><i class="fa-solid fa-award"></i> The SkillConnect Advantage</div>
+            <h2 class="section-title">Bridging the Gap Between <span class="text-orange">Talent & Opportunity</span></h2>
+            <p class="section-desc">
+              India has over 450 million informal sector workers who traditionally stand at roadside labor 'nakas' without any job guarantee or fair wages. SkillConnect digitizes local daily wage discovery with dignity.
+            </p>
+
+            <div class="features-list">
+              <div class="feature-item">
+                <div class="feat-icon"><i class="fa-solid fa-percent"></i></div>
+                <div>
+                  <h4>Zero Commission Fee</h4>
+                  <p>100% of the wage goes straight into the worker's pocket. No labor contractors taking cuts.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feat-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <div>
+                  <h4>Aadhaar Verified Profiles</h4>
+                  <p>Workers and employers undergo identity verification for safe residential and commercial hiring.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feat-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                <div>
+                  <h4>Same-Day Emergency Hiring</h4>
+                  <p>Need a plumber or mason urgently? Match with skilled workers located within 15 minutes of your location.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feat-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                <div>
+                  <h4>Fair Minimum Wage Standards</h4>
+                  <p>Benchmark rates aligned with regional cost of living to prevent underpayment of workers.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="why-us-card-banner">
+            <div class="why-card-inner">
+              <img 
+                src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80" 
+                alt="Civil engineer and mason working constructively at an urban construction site in India" 
+                class="why-img"
+              >
+              <div class="banner-quote-box">
+                <i class="fa-solid fa-quote-left quote-icon"></i>
+                <p>"SkillConnect changed my life. Earlier I used to wait at the chowk for 3 hours every morning. Now I receive daily booking calls directly on my phone."</p>
+                <div class="quote-author">
+                  <strong>— Rameshwar Yadav</strong>
+                  <span>Master Mason & Tile Layer, Mumbai</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: ABOUT US -->
+    <section class="about-section" id="about">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="sub-badge"><i class="fa-solid fa-heart"></i> Our Mission & Vision</div>
+          <h2 class="section-title">Empowering the Backbone of <span class="text-blue">Our Nation</span></h2>
+          <p class="section-desc">
+            SkillConnect was created as a localized socio-technical platform to provide social security, job stability, and digital empowerment to daily-wage tradespersons.
+          </p>
+        </div>
+
+        <div class="about-cards-grid">
+          <div class="about-card">
+            <div class="about-card-icon"><i class="fa-solid fa-bullseye"></i></div>
+            <h3>Our Mission</h3>
+            <p>To eliminate daily unemployment for manual trades by providing hyper-local job visibility and guaranteed transparent wage structures through accessible web technologies.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-card-icon"><i class="fa-solid fa-eye"></i></div>
+            <h3>Our Vision</h3>
+            <p>To build a nationwide ecosystem where every blue-collar worker possesses a verified digital skill credential, fair social protection, and recurring livelihood opportunities.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-card-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+            <h3>Core Values</h3>
+            <p>Dignity of labor, fair pricing, mutual trust, safety on project sites, and accessible multilingual technology for users from all educational backgrounds.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 9: CONTACT US & HELPLINE -->
+    <section class="contact-section" id="contact">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info-panel">
+            <div class="sub-badge"><i class="fa-solid fa-headset"></i> 24/7 Support</div>
+            <h2 class="section-title">We Are Here to <span class="text-orange">Help You</span></h2>
+            <p class="section-desc">
+              Have questions regarding job listings, wage disputes, or registration? Reach out to our dedicated support teams.
+            </p>
+
+            <div class="contact-details-list">
+              <div class="contact-detail-card">
+                <div class="c-icon"><i class="fa-solid fa-phone-volume"></i></div>
+                <div>
+                  <span class="c-label">Toll-Free Worker Helpline</span>
+                  <a href="tel:18008907545" class="c-val">1800-890-SKILL (1800-890-7545)</a>
+                  <span class="c-sub">Available in Hindi, Marathi, Bengali, Tamil & English</span>
+                </div>
+              </div>
+              <div class="contact-detail-card">
+                <div class="c-icon"><i class="fa-solid fa-envelope"></i></div>
+                <div>
+                  <span class="c-label">Official Inquiries & Support</span>
+                  <a href="mailto:support@skillconnect.org" class="c-val">support@skillconnect.org</a>
+                </div>
+              </div>
+              <div class="contact-detail-card">
+                <div class="c-icon"><i class="fa-solid fa-map-location"></i></div>
+                <div>
+                  <span class="c-label">Central Facilitation Center</span>
+                  <p class="c-val-text">SkillConnect Hub, 4th Floor, Tech Park, BKC, Mumbai - 400051</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="emergency-notice-box">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              <div>
+                <strong>Safety & Payment Guarantee:</strong>
+                <p>Never pay any registration fee or cash advance to any agent. SkillConnect is 100% free for all daily workers.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Contact Form -->
+          <div class="contact-form-panel">
+            <div class="form-wrapper-card">
+              <h3 class="form-title">Send Us a Message</h3>
+              <p class="form-subtitle">Fill in your query and our team will get back within 2 business hours.</p>
+
+              <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                  <label for="contactName">Your Full Name <span class="req">*</span></label>
+                  <input type="text" id="contactName" required placeholder="e.g. Anand Verma">
+                </div>
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="contactPhone">Mobile Number <span class="req">*</span></label>
+                    <input type="tel" id="contactPhone" required placeholder="10-digit mobile number">
+                  </div>
+                  <div class="form-group">
+                    <label for="contactRole">I am a</label>
+                    <select id="contactRole">
+                      <option value="worker">Daily-Wage Worker</option>
+                      <option value="employer">Employer / Contractor</option>
+                      <option value="student">Student / Researcher</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="contactSubject">Subject <span class="req">*</span></label>
+                  <input type="text" id="contactSubject" required placeholder="Brief topic of query">
+                </div>
+                <div class="form-group">
+                  <label for="contactMessage">Message Details <span class="req">*</span></label>
+                  <textarea id="contactMessage" rows="4" required placeholder="Write your question or request here..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-lg">
+                  <i class="fa-solid fa-paper-plane"></i> Submit Inquiry
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#home" class="brand-logo footer-logo">
+            <div class="logo-icon"><i class="fa-solid fa-bolt-lightning"></i></div>
+            <div class="logo-text">
+              <span class="logo-main">SKILL<span class="highlight">CONNECT</span></span>
+              <span class="logo-sub">Dignity • Fair Wages • Local Work</span>
+            </div>
+          </a>
+          <p class="footer-bio">
+            A state-of-the-art community initiative bridging daily-wage labor and localized market demands across urban and rural India.
+          </p>
+          <div class="social-links">
+            <a href="javascript:void(0)" class="social-btn" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="javascript:void(0)" class="social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="javascript:void(0)" class="social-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="javascript:void(0)" class="social-btn" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="javascript:void(0)" class="social-btn" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-menu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#categories">Worker Categories</a></li>
+            <li><a href="#jobs">Find Daily Jobs</a></li>
+            <li><a href="#workers">Hire Local Workers</a></li>
+            <li><a href="#howItWorks">How It Works</a></li>
+            <li><a href="#about">About Our Mission</a></li>
+            <li><a href="#contact">Contact & Help</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Worker Trades</h4>
+          <ul class="footer-menu">
+            <li><a href="#jobs" onclick="filterByCategory('Construction Workers')">Construction & Masonry</a></li>
+            <li><a href="#jobs" onclick="filterByCategory('Electricians')">Licensed Electricians</a></li>
+            <li><a href="#jobs" onclick="filterByCategory('Plumbers')">Plumbers & Pipe Fitters</a></li>
+            <li><a href="#jobs" onclick="filterByCategory('Carpenters')">Carpenters & Woodworkers</a></li>
+            <li><a href="#jobs" onclick="filterByCategory('Painters')">Painters & Polishers</a></li>
+            <li><a href="#jobs" onclick="filterByCategory('Cleaners')">Deep Cleaners & Sanitation</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Government & Trust</h4>
+          <ul class="footer-menu">
+            <li><a href="javascript:void(0)"><i class="fa-solid fa-file-shield"></i> e-Shram Portal Linkage</a></li>
+            <li><a href="javascript:void(0)"><i class="fa-solid fa-building-columns"></i> Direct Benefit Transfer (DBT)</a></li>
+            <li><a href="javascript:void(0)"><i class="fa-solid fa-lock"></i> Privacy Policy</a></li>
+            <li><a href="javascript:void(0)"><i class="fa-solid fa-gavel"></i> Terms of Daily Employment</a></li>
+            <li><a href="javascript:void(0)"><i class="fa-solid fa-shield-heart"></i> Worker Insurance Scheme</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 SkillConnect Portal. Built for Academic Presentation & Demonstration. Vanilla JS + LocalStorage.</p>
+        <div class="language-indicator">
+          <i class="fa-solid fa-globe"></i> Language: <strong>English / हिन्दी / मराठी</strong>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================== -->
+  <!-- MODALS SECTION -->
+  <!-- ======================================================== -->
+
+  <!-- 1. AUTH MODAL (LOGIN & REGISTRATION) -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-card auth-modal-card">
+      <button class="modal-close-btn" onclick="closeModal('authModal')"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="auth-modal-header">
+        <div class="auth-brand">
+          <i class="fa-solid fa-bolt-lightning text-orange"></i>
+          <span>SkillConnect Portal</span>
+        </div>
+        <h3 id="authModalTitle">Welcome to SkillConnect</h3>
+        <p id="authModalSubtitle">Sign in or register to access daily jobs and worker profiles</p>
+      </div>
+
+      <!-- Auth Role Switcher -->
+      <div class="auth-role-tabs">
+        <button class="auth-role-tab active" id="roleTabWorker" onclick="switchAuthRole('worker')">
+          <i class="fa-solid fa-helmet-safety"></i> Daily Worker
+        </button>
+        <button class="auth-role-tab" id="roleTabEmployer" onclick="switchAuthRole('employer')">
+          <i class="fa-solid fa-building-user"></i> Employer / Contractor
+        </button>
+      </div>
+
+      <!-- Auth Mode Switcher (Login vs Register) -->
+      <div class="auth-mode-switch">
+        <button class="mode-btn active" id="modeBtnLogin" onclick="switchAuthMode('login')">Sign In</button>
+        <button class="mode-btn" id="modeBtnRegister" onclick="switchAuthMode('register')">New Registration</button>
+      </div>
+
+      <!-- Quick Demo Login Shortcut Inside Modal -->
+      <div class="modal-demo-quick">
+        <span>Quick Demo:</span>
+        <button type="button" class="btn-micro" onclick="loginDemoWorker()"><i class="fa-solid fa-user"></i> Ramesh (Worker)</button>
+        <button type="button" class="btn-micro" onclick="loginDemoEmployer()"><i class="fa-solid fa-briefcase"></i> Sharma Builders</button>
+      </div>
+
+      <!-- Form Container -->
+      <form id="authForm" class="auth-form">
+        <!-- Error Message Container -->
+        <div class="auth-alert error hidden" id="authErrorMsg"></div>
+
+        <!-- Role Hidden input -->
+        <input type="hidden" id="authRoleInput" value="worker">
+        <!-- Mode Hidden input -->
+        <input type="hidden" id="authModeInput" value="login">
+
+        <!-- REGISTRATION-ONLY FIELDS -->
+        <div id="registerFields" class="hidden">
+          <div class="form-group">
+            <label for="regFullName">Full Name <span class="req">*</span></label>
+            <input type="text" id="regFullName" placeholder="e.g. Ramesh Kumar">
+          </div>
+
+          <!-- Specific to Worker -->
+          <div id="workerOnlyFields">
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="regWorkerCategory">Primary Trade / Skill <span class="req">*</span></label>
+                <select id="regWorkerCategory">
+                  <option value="Construction Workers">Construction Worker</option>
+                  <option value="Electricians">Electrician</option>
+                  <option value="Plumbers">Plumber</option>
+                  <option value="Carpenters">Carpenter</option>
+                  <option value="Painters">Painter</option>
+                  <option value="Gardeners">Gardener</option>
+                  <option value="Cleaners">Cleaner</option>
+                  <option value="Delivery Workers">Delivery Worker</option>
+                  <option value="Agricultural Workers">Agricultural Worker</option>
+                  <option value="Helpers">Helper & Loader</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="regDailyWage">Expected Daily Wage (₹) <span class="req">*</span></label>
+                <input type="number" id="regDailyWage" placeholder="e.g. 850" min="400" max="3000">
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="regExperience">Experience (Years)</label>
+                <input type="number" id="regExperience" placeholder="e.g. 5" min="0" max="40">
+              </div>
+              <div class="form-group">
+                <label for="regWorkerSkills">Skill Tags (Comma separated)</label>
+                <input type="text" id="regWorkerSkills" placeholder="e.g. House wiring, MCB, Inverter">
+              </div>
+            </div>
+          </div>
+
+          <!-- Specific to Employer -->
+          <div id="employerOnlyFields" class="hidden">
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="regCompanyName">Company / Contractor Name <span class="req">*</span></label>
+                <input type="text" id="regCompanyName" placeholder="e.g. Apex Civil Infra">
+              </div>
+              <div class="form-group">
+                <label for="regEmployerType">Employer Type</label>
+                <select id="regEmployerType">
+                  <option value="Contractor">Civil Contractor</option>
+                  <option value="Homeowner">Individual Homeowner</option>
+                  <option value="Company">Business / Warehouse</option>
+                  <option value="Subcontractor">Subcontractor</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="regCity">City / Location <span class="req">*</span></label>
+            <select id="regCity">
+              <option value="Mumbai">Mumbai</option>
+              <option value="Delhi">Delhi NCR</option>
+              <option value="Bengaluru">Bengaluru</option>
+              <option value="Pune">Pune</option>
+              <option value="Hyderabad">Hyderabad</option>
+              <option value="Ahmedabad">Ahmedabad</option>
+              <option value="Jaipur">Jaipur</option>
+              <option value="Chennai">Chennai</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- COMMON LOGIN & REGISTER FIELDS -->
+        <div class="form-group">
+          <label for="authPhone">Mobile Number (Login ID) <span class="req">*</span></label>
+          <div class="input-with-prefix">
+            <span class="input-prefix">+91</span>
+            <input type="tel" id="authPhone" required placeholder="10-digit mobile number" maxlength="10">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="authPassword">Password <span class="req">*</span></label>
+          <input type="password" id="authPassword" required placeholder="Enter password (min 6 chars)">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="authSubmitBtn">
+          <i class="fa-solid fa-right-to-bracket"></i> Sign In
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. POST A JOB MODAL (EMPLOYER ACTION) -->
+  <div class="modal-overlay" id="postJobModal">
+    <div class="modal-card post-job-card">
+      <button class="modal-close-btn" onclick="closeModal('postJobModal')"><i class="fa-solid fa-xmark"></i></button>
+
+      <div class="modal-header-banner bg-blue-banner">
+        <div class="m-icon"><i class="fa-solid fa-bullhorn"></i></div>
+        <div>
+          <h3>Post a New Job Requirement</h3>
+          <p>Get matched with verified local tradespersons in your neighborhood.</p>
+        </div>
+      </div>
+
+      <form id="postJobForm" class="post-job-form">
+        <div class="form-group">
+          <label for="jobTitle">Job Title <span class="req">*</span></label>
+          <input type="text" id="jobTitle" required placeholder="e.g. Need 2 Experienced Masons for Brick Plastering">
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="jobCategorySelect">Worker Category <span class="req">*</span></label>
+            <select id="jobCategorySelect" required>
+              <option value="Construction Workers">Construction Workers</option>
+              <option value="Electricians">Electricians</option>
+              <option value="Plumbers">Plumbers</option>
+              <option value="Carpenters">Carpenters</option>
+              <option value="Painters">Painters</option>
+              <option value="Gardeners">Gardeners</option>
+              <option value="Cleaners">Cleaners</option>
+              <option value="Delivery Workers">Delivery Workers</option>
+              <option value="Agricultural Workers">Agricultural Workers</option>
+              <option value="Helpers">Helpers & Loaders</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="jobDailySalary">Daily Wage Offered (₹/Day) <span class="req">*</span></label>
+            <input type="number" id="jobDailySalary" required min="400" max="5000" placeholder="e.g. 950">
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="jobLocation">City & Area <span class="req">*</span></label>
+            <input type="text" id="jobLocation" required placeholder="e.g. Andheri East, Mumbai">
+          </div>
+          <div class="form-group">
+            <label for="jobOpenings">Number of Workers Needed</label>
+            <input type="number" id="jobOpenings" min="1" max="50" value="2">
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="jobDuration">Duration</label>
+            <select id="jobDuration">
+              <option value="1 Day (Today / Tomorrow)">1 Day (Immediate)</option>
+              <option value="2-3 Days">2-3 Days</option>
+              <option value="1 Week">1 Week</option>
+              <option value="1 Month or More">Long Term (1 Month+)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="jobPayType">Payment Term</label>
+            <select id="jobPayType">
+              <option value="Same Day Daily Cash / UPI">Same Day Daily Cash / UPI</option>
+              <option value="Weekly Payout">Weekly Payout</option>
+              <option value="Milestone / Completion">Upon Task Completion</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="jobSkills">Required Skills (Comma separated)</label>
+          <input type="text" id="jobSkills" placeholder="e.g. Plastering, Scaffolding, Brickwork">
+        </div>
+
+        <div class="form-group">
+          <label for="jobDescription">Detailed Description & Work Site Address <span class="req">*</span></label>
+          <textarea id="jobDescription" rows="3" required placeholder="Specify work timings (e.g. 9am to 6pm), exact site landmark, and whether lunch or tea is provided..."></textarea>
+        </div>
+
+        <div class="modal-form-actions">
+          <button type="button" class="btn btn-outline" onclick="closeModal('postJobModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-lg">
+            <i class="fa-solid fa-paper-plane"></i> Publish Job Listing
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. VIEW JOB DETAILS & APPLY MODAL -->
+  <div class="modal-overlay" id="jobDetailModal">
+    <div class="modal-card job-detail-card">
+      <button class="modal-close-btn" onclick="closeModal('jobDetailModal')"><i class="fa-solid fa-xmark"></i></button>
+
+      <div class="job-detail-content" id="jobDetailContent">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. VIEW WORKER PROFILE & HIRE MODAL -->
+  <div class="modal-overlay" id="workerDetailModal">
+    <div class="modal-card worker-detail-card">
+      <button class="modal-close-btn" onclick="closeModal('workerDetailModal')"><i class="fa-solid fa-xmark"></i></button>
+
+      <div class="worker-detail-content" id="workerDetailContent">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. EDIT PROFILE MODAL -->
+  <div class="modal-overlay" id="editProfileModal">
+    <div class="modal-card edit-profile-card">
+      <button class="modal-close-btn" onclick="closeModal('editProfileModal')"><i class="fa-solid fa-xmark"></i></button>
+
+      <div class="modal-header-banner bg-orange-banner">
+        <div class="m-icon"><i class="fa-solid fa-user-pen"></i></div>
+        <div>
+          <h3>Update Your Profile</h3>
+          <p>Keep your contact and wage expectations updated to get more bookings.</p>
+        </div>
+      </div>
+
+      <form id="editProfileForm" class="edit-profile-form">
+        <div class="form-group">
+          <label for="editName">Full Name <span class="req">*</span></label>
+          <input type="text" id="editName" required>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="editPhone">Contact Mobile Number <span class="req">*</span></label>
+            <input type="tel" id="editPhone" required maxlength="10">
+          </div>
+          <div class="form-group">
+            <label for="editCity">City / Base Location <span class="req">*</span></label>
+            <input type="text" id="editCity" required>
+          </div>
+        </div>
+
+        <div id="workerEditFields">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="editWage">Daily Wage Expectation (₹/Day)</label>
+              <input type="number" id="editWage" min="400" max="3000">
+            </div>
+            <div class="form-group">
+              <label for="editExp">Experience (Years)</label>
+              <input type="number" id="editExp" min="0" max="40">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="editSkills">Skills (Comma separated)</label>
+            <input type="text" id="editSkills">
+          </div>
+          <div class="form-group">
+            <label for="editBio">Bio / Specialization</label>
+            <textarea id="editBio" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="modal-form-actions">
+          <button type="button" class="btn btn-outline" onclick="closeModal('editProfileModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-check"></i> Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>
+
